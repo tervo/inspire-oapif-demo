@@ -10,7 +10,7 @@
 		"node": "^8.11.4"
 	},
 	"scripts": {
-		"start": "tsc -w & nodemon dist/server/app.js",
+		"start": "tsc -w & nodemon dist/server/app.js -c /",
 		"build": "tsc",
 		"test": "jest dist/",
 		"typedoc": "typedoc --out typedoc/ --mode file --exclude **/*.test.*,**/mock/**"

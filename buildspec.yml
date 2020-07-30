@@ -1,0 +1,18 @@
+---
+phases:
+  build:
+    commands:
+      - "echo Build started on `date`"
+      - "echo Building the Docker image..."
+      - "docker build -t tervo/inspire-oapif-demo ."
+      - "docker tag tervo/inspire-oapif-demo 462069092803.dkr.ecr.eu-west-1.amazonaws.com/inspire-oapif-demo:latest"
+  post_build:
+    commands:
+      - "echo Build completed on `date`"
+      - "echo Pushing the Docker image..."
+      - "docker push 462069092803.dkr.ecr.eu-west-1.amazonaws.com/inspire-oapif-demo:latest"
+  pre_build:
+    commands:
+      - "echo Logging in to Docker Hub..."
+      #- "docker login --username=\"dvohra\" --password=\"password\""
+version: 0.1

@@ -1,0 +1,3 @@
+[submodule "backends/smartmet-sofp-backend"]
+	path = backends/smartmet-sofp-backend
+	url = https://github.com/tervo/smartmet-sofp-backend.git
