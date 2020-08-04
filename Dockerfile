@@ -1,5 +1,5 @@
 #FROM centos:7
-FROM node:12
+FROM node:8
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -24,6 +24,12 @@ RUN npm install
 COPY . .
 RUN npm run build
 #RUN npm run test
+
+WORKDIR /usr/src/app/backends/smartmet-sofp-backend-inspire-oapif-demo-aws-obs
+RUN npm install
+RUN npm run build
+
+WORKDIR /usr/src/app
 
 USER sofp-user
 
