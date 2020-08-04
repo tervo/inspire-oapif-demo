@@ -7,6 +7,7 @@ phases:
       - REPOSITORY_URI=462069092803.dkr.ecr.eu-west-1.amazonaws.com/inspire-oapif-demo
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+      - git submodule foreach git pull origin master
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
       #- "docker build -t tervo/inspire-oapif-demo ."
