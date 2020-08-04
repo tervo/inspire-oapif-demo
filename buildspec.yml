@@ -31,7 +31,6 @@ phases:
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
       #- "docker login --username=\"dvohra\" --password=\"password\""
-
-  artifacts:
-      files: imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
 version: 0.2
