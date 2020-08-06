@@ -37,6 +37,17 @@ function produceBody(title, data) {
             tmp += _.map(c.links, l => {
                 return `<p>${l.rel} = <a href="${l.href}">${l.title || '(no title)'}</a> (${l.type})</p>`;
             }).join('');
+
+            if (c.extent) {
+              tmp += '<h2>Extent</h2>';
+              if (c.extent.spatial) {
+                tmp += '<p>Spatial =  '+c.extent.spatial.bbox+'<p>';
+              }
+              if (c.extent.temporal && c.extent.temporal.interval) {
+                console.debug(c.extent.temporal)
+                 tmp += '<p>Temporal = '+c.extent.temporal.interval+'<p>'
+              }
+            }
             return tmp;
         } ).join('');
     }
@@ -152,4 +163,3 @@ export function json2html(data, extraOptions?) {
 
     return html;
 }
-

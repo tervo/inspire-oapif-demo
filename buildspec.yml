@@ -8,6 +8,7 @@ phases:
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
       - git clone https://github.com/tervo/smartmet-sofp-backend-inspire-oapif-demo-aws-obs.git backends/smartmet-sofp-backend-inspire-oapif-demo-aws-obs
+      - git clone https://github.com/tervo/sofp-lib.git
       - docker build -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
       #- "docker build -t tervo/inspire-oapif-demo ."

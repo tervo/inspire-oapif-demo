@@ -1,3 +1,6 @@
 [submodule "backends/smartmet-sofp-backend-inspire-oapif-demo-aws-obs"]
 	path = backends/smartmet-sofp-backend-inspire-oapif-demo-aws-obs
 	url = https://github.com/tervo/smartmet-sofp-backend-inspire-oapif-demo-aws-obs
+[submodule "sofp-lib"]
+	path = sofp-lib
+	url = https://github.com/tervo/sofp-lib

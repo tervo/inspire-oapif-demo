@@ -23,7 +23,15 @@ RUN npm install
 # Copy application, build & test
 COPY . .
 RUN npm run build
-#RUN npm run test
+RUN npm run test
+
+# Build library
+WORKDIR /usr/src/app/sofp-lib
+RUN npm install
+RUN npm run build
+RUN rm -rf ../node_modules/sofp-lib
+#RUN npm install ../node_modules/sofp-lib
+RUN cd .. && npm link sofp-lib
 
 WORKDIR /usr/src/app/backends/smartmet-sofp-backend-inspire-oapif-demo-aws-obs
 RUN npm install

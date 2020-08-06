@@ -14,7 +14,7 @@ import { geojson2html } from './geojson2html';
 import {filterProviders} from './filters/';
 
 /**
- * The API class provides accessors to produce metadata for the OGC API Features service. The API class wraps a Server object 
+ * The API class provides accessors to produce metadata for the OGC API Features service. The API class wraps a Server object
  * and uses the data and configuration within that object to produce responses.
  **/
 
@@ -22,7 +22,7 @@ export interface APIResponse {
     title?: string;
     description?: string;
     links?: Link[],
-    collections?: Collection[]
+    collections?: Collection[]  
 };
 
 export interface RequestParameters {
@@ -185,7 +185,7 @@ export class API {
             if (!collection) {
                 return next();
             }
-            
+
             let filters = this.parseFilters(req, collection);
             const query : Query = {
                 limit:     req.query.limit ? Number(req.query.limit) : 10,
@@ -205,7 +205,7 @@ export class API {
             if (!collection) {
                 return next();
             }
-            
+
             let response = this.getFeatureCollectionsMetadata(produceRequestParameters(req), collection);
             sendResponse(req, res, response);
         });
@@ -301,7 +301,7 @@ export class API {
     /**
      * Return object following the WFS 3.0.0 draft 1 specification for feature collections metadata
      * @link https://cdn.rawgit.com/opengeospatial/WFS_FES/3.0.0-draft.1/docs/17-069.html#_feature_collections_metadata
-     */ 
+     */
     getFeatureCollectionsMetadata(params : RequestParameters, collection? : Collection) : APIResponse {
         var collections = collection ? [ collection ] : this.server.getCollections();
         collections = _.map(collections, c => { return { 'id': c.id, 'title': c.title, 'description': c.description, 'links': c.links, 'extent': c.extent, 'crs': c.crs }});
@@ -462,4 +462,3 @@ export class API {
         });
     }
 };
-
