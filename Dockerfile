@@ -35,4 +35,4 @@ USER sofp-user
 
 # Done!
 EXPOSE 3000
-CMD [ "node", "dist/server/app.js", "-c", "/" ]
+CMD [ "node", "dist/server/app.js", "-c", "/", "-t", "FMI OpenData INSPIRE OGC API Features DEMO", "-d", "INSPIRE compliant FMI OpenData OGC API Features demo server to provide automated weather observations (AWS)"]
