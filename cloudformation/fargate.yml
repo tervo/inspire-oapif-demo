@@ -13,10 +13,10 @@ Parameters:
   ImageVersion:
     Type: String
     Default: latest
-#  Certificate:
-#    Type: String
+  Certificate:
+    Type: String
     # Update with the certificate ARN from Certificate Manager, which must exist in the same region.
-    #Default: 'arn:aws:acm:eu-west-1:091647103188:certificate/c14c3797-c4a5-4055-90c6-150a94444063'
+    Default: 'arn:aws:acm:eu-west-1:462069092803:certificate/d37196c7-cef7-42ec-b47b-f5b0d602a2fa'
   #Image:
   #  Type: String
     # Update with the Docker image. "You can use images in the Docker Hub registry or specify other repositories (repository-url/image:tag)."
@@ -36,19 +36,15 @@ Parameters:
   LoadBalancerPort:
     Type: Number
     Default: 80
+  LoadBalancerHTTPPort:
+      Type: Number
+      Default: 80
   LoadBalancerHTTPSPort:
     Type: Number
-    Default: 80
+    Default: 443
   HealthCheckPath:
     Type: String
     Default: /
-  #HostedZoneName:
-#    Type: String
-#    Default: visitkoli.fi
-#  Subdomain:
-#    Type: String
-#    Default: myservice
-  # for autoscaling
   MinContainers:
     Type: Number
     Default: 1
@@ -183,7 +179,7 @@ Resources:
     # This dependency is needed so that the load balancer is setup correctly in time
     DependsOn:
       - ListenerHTTP
-    #  - ListenerHTTPS
+      - ListenerHTTPS
     Properties:
       ServiceName: !Ref ServiceName
       Cluster: !Ref Cluster
@@ -225,17 +221,17 @@ Resources:
           Value: 60 # default is 300
       TargetType: ip
       VpcId: !Ref VPC
-  # ListenerHTTPS:
-  #    Type: AWS::ElasticLoadBalancingV2::Listener
-  #    Properties:
-  #      DefaultActions:
-  #        - TargetGroupArn: !Ref TargetGroup
-  #          Type: forward
-  #      LoadBalancerArn: !Ref LoadBalancer
-  #      Port: !Ref LoadBalancerHTTPSPort
-  #      Protocol: HTTPS
-  #      Certificates:
-  #       - CertificateArn: !Ref Certificate
+  ListenerHTTPS:
+     Type: AWS::ElasticLoadBalancingV2::Listener
+     Properties:
+       DefaultActions:
+         - TargetGroupArn: !Ref TargetGroup
+           Type: forward
+       LoadBalancerArn: !Ref LoadBalancer
+       Port: !Ref LoadBalancerHTTPSPort
+       Protocol: HTTPS
+       Certificates:
+        - CertificateArn: !Ref Certificate
   ListenerHTTP:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
@@ -302,29 +298,7 @@ Resources:
         ScaleOutCooldown: 10
         # Keep things at or lower than 50% CPU utilization, for example
         TargetValue: !Ref AutoScalingTargetValue
-  # Global accelerator is used to provide static ip-endoint without domain name
-  # GlobalAccelerator:
-  #   Type: 'AWS::GlobalAccelerator::Accelerator'
-  #   Properties:
-  #     Name: MySampleAccelerator
-  #     IpAddressType: "IPV4"
-  #     Enabled: true
-  # Listener:
-  #   Type: 'AWS::GlobalAccelerator::Listener'
-  #   Properties:
-  #     AcceleratorArn: !Ref Accelerator
-  #     Protocol: TCP
-  #     PortRanges:
-  #       - FromPort: '80'
-  #         ToPort: '80'
-  # EuWest1EndpointGroup:
-  #   Type: 'AWS::GlobalAccelerator::EndpointGroup'
-  #   Properties:
-  #     ListenerArn: !Ref Listener
-  #     EndpointGroupRegion: eu-west-1
-  #     EndpointConfigurations:
-  #       - EndpointId: !Ref LoadbalancerARN
-  #         ClientIPPreservationEnabled: true
+  #
 # Outputs:
 #   Endpoint:
 #     Description: Endpoint
